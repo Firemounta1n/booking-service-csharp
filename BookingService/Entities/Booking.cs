@@ -19,6 +19,7 @@ public class Booking
     // Время отправки команды отмены — для поиска зависших отмен (Задача 03)
     public DateTimeOffset? CancellationRequestedAt { get; private set; }
 
+
     // Parameterless constructor required by EF Core
     private Booking() { }
 
