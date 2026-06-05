@@ -90,10 +90,12 @@ public class Booking
                 break;
 
             case BookingStatus.Confirmed:
-                // Отменяем подтверждённое бронирование
+                // Подтверждённое бронирование — переходим в промежуточный статус,
+                // чтобы при ошибке Catalog Service (DLQ) можно было откатиться
                 if (currentDate >= BookedFrom)
                     throw new BusinessException("Нельзя отменить начавшееся бронирование");
-                Status = BookingStatus.Cancelled;
+                Status = BookingStatus.CancellationPending;
+                CancellationRequestedAt = DateTimeOffset.UtcNow;
                 break;
 
             case BookingStatus.None:
